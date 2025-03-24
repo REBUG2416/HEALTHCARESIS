@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm install && tsc && vite build",
+    "build": "rm -rf node_modules package-lock.json && npm cache clean --force && npm install && tsc && vite build",
     "start": "tsc && vite",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
