@@ -108,7 +108,7 @@ const AppContent = () => {
       >
         <div className="flex items-center justify-between h-16 px-4">
           <div className="flex items-center">
-            <span className="text-xl font-semibold text-blue-600">HMS</span>
+            <span className="text-xl font-semibold text-blue-600">UH</span>
           </div>
           <button className="md:hidden text-gray-500 hover:text-gray-700" onClick={() => setSidebarOpen(false)}>
             <FiX size={24} />
