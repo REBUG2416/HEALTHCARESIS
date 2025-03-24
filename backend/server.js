@@ -3,6 +3,7 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+import {sendEmail} from "../utils/EmailUtilities"
 
 const app = express();
 app.use(
@@ -1200,7 +1201,7 @@ app.get("/api/appointments/:id", async (req, res) => {
 });
 
 app.post("/api/appointments", async (req, res) => {
-  const { patient_id, user_id, appointment_date, appointment_type, notes, status } = req.body;
+  const { patient_id, user_id, appointment_date, appointment_type, notes, status,to,subject,html } = req.body;
 
   if (!patient_id || !user_id || !appointment_date || !appointment_type) {
     return res.status(400).json({ message: "Required fields are missing" });
@@ -1216,6 +1217,8 @@ app.post("/api/appointments", async (req, res) => {
       status: status || "Scheduled",
     });
 
+    sendEmail({to,subject,html})
+
     res.status(201).json({
       message: "Appointment created successfully",
       appointment: newAppointment,
@@ -1228,7 +1231,7 @@ app.post("/api/appointments", async (req, res) => {
 
 app.put("/api/appointments/:id", async (req, res) => {
   const { id } = req.params;
-  const { patient_id, user_id, appointment_date, appointment_type, notes, status } = req.body;
+  const { patient_id, user_id, appointment_date, appointment_type, notes, status,to,subject,html } = req.body;
 
   if (!patient_id || !user_id || !appointment_date || !appointment_type) {
     return res.status(400).json({ message: "Required fields are missing" });
@@ -1236,7 +1239,6 @@ app.put("/api/appointments/:id", async (req, res) => {
 
   try {
     const appointment = await Appointment.findByPk(id);
-
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
@@ -1250,6 +1252,7 @@ app.put("/api/appointments/:id", async (req, res) => {
       status,
       updated_at: new Date(),
     });
+    sendEmail({to,subject,html})
 
     res.json({
       message: "Appointment updated successfully",
