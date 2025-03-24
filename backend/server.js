@@ -3,7 +3,7 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { sendEmail } = require("../frontend/src/utils/EmailUtilities");
+const { sendEmail } = require("./EmailUtilities");
 const app = express();
 app.use(
   cors({
