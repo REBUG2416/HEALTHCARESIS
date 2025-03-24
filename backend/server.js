@@ -1251,7 +1251,8 @@ app.put("/api/appointments/:id", async (req, res) => {
       status,
       updated_at: new Date(),
     });
-    sendEmail({to,subject,html})
+    
+    await sendEmail({to,subject,html})
 
     res.json({
       message: "Appointment updated successfully",
