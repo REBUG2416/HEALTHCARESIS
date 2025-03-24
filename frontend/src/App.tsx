@@ -47,6 +47,7 @@ import {
   FiLogOut,
   FiSettings,
 } from "react-icons/fi"
+import { useEffect } from "react"
 
 // Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -80,7 +81,7 @@ const AppContent = () => {
   const userRole = user?.role || "admin" // Default to admin if not available
   const userName = user?.firstName ? `${user.firstName} ${user.lastName}` : user?.username || "Admin"
 
-  if (currentPath === "/" && user.role === "patient" && user.role === "doctor")
+  if (currentPath === "/" && user?.role === "patient" && user?.role === "doctor")
   navigate("/profile")
 
 
