@@ -288,7 +288,7 @@ const AppContent = () => {
               <button className="md:hidden text-gray-500 hover:text-gray-700 mr-2" onClick={() => setSidebarOpen(true)}>
                 <FiMenu size={24} />
               </button>
-              <h1 className="text-gray-500 text-xl">Hospital Management System</h1>
+              <h1 className="text-gray-500 text-xl">uniHealth</h1>
             </div>
 
             <div className="flex items-center">
