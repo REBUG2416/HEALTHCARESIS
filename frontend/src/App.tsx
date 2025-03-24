@@ -80,10 +80,14 @@ const AppContent = () => {
   const user = authService.getCurrentUser()
   const userRole = user?.role || "admin" // Default to admin if not available
   const userName = user?.firstName ? `${user.firstName} ${user.lastName}` : user?.username || "Admin"
-
-  if (currentPath === "/" && user?.role === "patient" && user?.role === "doctor")
-  navigate("/profile")
-
+  
+  useEffect(()=>{
+    if (currentPath === "/" && user?.role === "patient" || user?.role === "doctor"){    
+      navigate("/profile")
+      }
+  },[currentPath])
+  
+  
 
   const handleLogout = () => {
     authService.logout()
@@ -288,17 +292,19 @@ const AppContent = () => {
               <button className="md:hidden text-gray-500 hover:text-gray-700 mr-2" onClick={() => setSidebarOpen(true)}>
                 <FiMenu size={24} />
               </button>
-              <h1 className="text-gray-500 text-xl">uniHealth</h1>
+              <h1 className="text-gray-500 text-xl">UniHealth</h1>
             </div>
 
             <div className="flex items-center">
               <div className="relative">
+                <Link to={"/profile"}>
                 <div className="flex items-center space-x-2">
                   <span className="hidden md:block text-sm font-medium text-gray-700">{userName}</span>
                   <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
                     {userName.charAt(0)}
                   </div>
                 </div>
+                </Link>
               </div>
             </div>
           </div>
