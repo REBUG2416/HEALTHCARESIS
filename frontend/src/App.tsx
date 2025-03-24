@@ -145,7 +145,7 @@ const AppContent = () => {
               </Link>
             </li>
 
-            {user.role !== "patient" && <li>
+            {user?.role !== "patient" && <li>
               <Link
                 to="/patients"
                 className={`flex items-center px-4 py-2 text-sm rounded-md ${
@@ -157,7 +157,7 @@ const AppContent = () => {
               </Link>
             </li>}
 
-{      user.role !== "patient" &&    <li>
+{      user?.role !== "patient" &&    <li>
             <Link
               to="/scan"
               className={`flex items-center px-4 py-2 text-sm rounded-md ${
@@ -223,7 +223,7 @@ const AppContent = () => {
               </Link>
             </li>
 
-           {user.role === "admin" && <li>
+           {user?.role === "admin" && <li>
               <Link
                 to="/reports"
                 className={`flex items-center px-4 py-2 text-sm rounded-md ${
