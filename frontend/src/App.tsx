@@ -29,6 +29,8 @@ import Login from "./components/Login"
 import authService from "./services/authService"
 import "./App.css"
 import Register from "./components/Register"
+import LandingPage from "./components/LandingPage"
+
 
 // Icons
 import {
@@ -82,7 +84,7 @@ const AppContent = () => {
   const userName = user?.firstName ? `${user.firstName} ${user.lastName}` : user?.username || "Admin"
   
   useEffect(()=>{
-    if (currentPath === "/" && user?.role === "patient" || user?.role === "doctor"){    
+    if (currentPath === "/Dashboard" && user?.role === "patient" || user?.role === "doctor"){    
       navigate("/profile")
       }
   },[currentPath])
@@ -93,6 +95,11 @@ const AppContent = () => {
     authService.logout()
     navigate("/login")
   }
+ // If we're on the landing page, don't show the sidebar
+ if (currentPath === "/landing") {
+  return <LandingPage />
+}
+
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -127,9 +134,9 @@ const AppContent = () => {
           <ul className="space-y-1">
             { (user?.role === "admin" || user?.role ==="staff") && <li>
               <Link
-                to="/"
+                to="/Dashboard"
                 className={`flex items-center px-4 py-2 text-sm rounded-md ${
-                  isActive("/") ? "text-blue-600 bg-blue-50 font-medium" : "text-gray-600 hover:bg-gray-100"
+                  isActive("/Dashboard") ? "text-blue-600 bg-blue-50 font-medium" : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
                 <FiHome className="mr-3 text-lg" />
@@ -315,9 +322,11 @@ const AppContent = () => {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/landing" element={<LandingPage />} />
+
 
             <Route
-              path="/"
+              path="/Dashboard"
               element={
                 <ProtectedRoute>
                   <Dashboard />
@@ -557,6 +566,8 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/" element={<LandingPage />} />
+
         <Route path="/*" element={<AppContent />} />
       </Routes>
       <Toaster position="top-right" />

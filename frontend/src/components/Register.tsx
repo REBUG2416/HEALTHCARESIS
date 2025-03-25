@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { toast } from "react-hot-toast"
 import authService from "../services/authService"
+import axios from "axios"
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,10 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    
+    // Call the function somewhere in your component
+    
 
     // Validate form
     if (!formData.username || !formData.password || !formData.email || !formData.firstName || !formData.lastName) {

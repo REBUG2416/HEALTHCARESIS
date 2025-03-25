@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(response.user))
 
       toast.success("Login successful")
-      navigate("/")
+      navigate("/Dashboard")
     } catch (err) {
       console.error("Login error:", err)
       toast.error("Invalid username or password")

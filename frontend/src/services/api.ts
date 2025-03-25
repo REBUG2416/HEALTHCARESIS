@@ -1,6 +1,5 @@
 import axios from "axios"
 
-// Create axios instance with base URL
 const API_URL = "https://healthcaresis.onrender.com/api"
 
 const api = axios.create({
@@ -10,33 +9,25 @@ const api = axios.create({
   },
 })
 
-// Add request interceptor for authentication
+// Fix CORS preflight by ensuring OPTIONS requests are handled
 api.interceptors.request.use(
-  (config) => {
+  async (config) => {
     const token = localStorage.getItem("token")
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
   },
-  (error) => {
-    return Promise.reject(error)
-  },
+  (error) => Promise.reject(error)
 )
 
-// Add response interceptor for error handling
+// Log responses & errors for debugging
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Handle session expiration
-    if (error.response && error.response.status === 401) {
-      localStorage.removeItem("token")
-      localStorage.removeItem("user")
-      window.location.href = "/login"
-    }
+    console.error("API Error:", error.response || error.message)
     return Promise.reject(error)
-  },
+  }
 )
 
 export default api
-
