@@ -1216,7 +1216,7 @@ app.post("/api/appointments", async (req, res) => {
       status: status || "Scheduled",
     });
 
-    sendEmail({to,subject,html})
+    sendEmail({to:to,subject:subject,html:html})
 
     res.status(201).json({
       message: "Appointment created successfully",
@@ -1252,7 +1252,7 @@ app.put("/api/appointments/:id", async (req, res) => {
       updated_at: new Date(),
     });
     
-    await sendEmail({to,subject,html})
+    await sendEmail({to:to,subject:subject,html:html})
 
     res.json({
       message: "Appointment updated successfully",
