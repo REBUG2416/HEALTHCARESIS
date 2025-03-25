@@ -6,7 +6,7 @@ export const sendEmail = async ({ to, subject, html }) => {
       service: "Gmail",
       auth: {
         user: "davidagochukwu@gmail.com",
-        pass: "americangoat",
+        pass: "ryho qzgh sagx qbll",
       },
     });
 
