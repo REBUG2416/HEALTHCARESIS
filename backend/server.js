@@ -1251,7 +1251,7 @@ app.put("/api/appointments/:id", async (req, res) => {
       status,
       updated_at: new Date(),
     });
-    
+    console.log(to,subject,html);
     await sendEmail({to:to,subject:subject,html:html})
 
     res.json({
