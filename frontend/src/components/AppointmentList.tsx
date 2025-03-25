@@ -26,11 +26,13 @@ const Appointments: React.FC = () => {
   const[user, setUser] = useState<any>()
   
 
-  useEffect(() => {
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        fetchAppointments();
+      }, 2000); // Wait 2 seconds before fetching
     
-    fetchAppointments()
-
-  }, [])
+      return () => clearTimeout(timer);
+    }, []);
 
 useEffect(()=>{
   if(appointments && user){ 

@@ -19,26 +19,46 @@ const AppointmentForm: React.FC = () => {
 
   const isEditMode = !!id
 
-  const [formData, setFormData] = useState<Appointment>({
+  const [formData, setFormData] = useState<any>({
     patient_id: patientIdFromQuery ? Number.parseInt(patientIdFromQuery) : 0,
     user_id: 0,
     appointment_date: new Date().toISOString().slice(0, 16),
     appointment_type: "Consultation",
     notes: "",
     status: "Scheduled",
+    
   })
 
   const [patients, setPatients] = useState<Patient[]>([])
+  const [currentPatient, setCurrentPatient] = useState<Patient>()
   const [doctors, setDoctors] = useState<User[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [initialLoading, setInitialLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
 
+
+useEffect(()=>{
+  const fetchpData = async () => {
+    if(formData.patient_id !== 0){
+  const patientData = await patientService.getPatientById(formData.patient_id)
+  setCurrentPatient(patientData)
+  
+  }
+  }
+  fetchpData()
+},[formData])
+
+useEffect(()=>{
+
+  console.log(formData);
+},[formData])
+
+
+
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         setInitialLoading(true)
-
         // Fetch patients
         const patientsData = await patientService.getAllPatients()
         setPatients(patientsData)
@@ -95,7 +115,6 @@ const AppointmentForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
     if (!formData.patient_id || !formData.user_id || !formData.appointment_date || !formData.appointment_type) {
       toast.error("Please fill in all required fields")
       return
@@ -105,9 +124,11 @@ const AppointmentForm: React.FC = () => {
       setLoading(true)
 
       if (isEditMode && id) {
+        setFormData({...formData,to:currentPatient.email,subject:"Your Appointment has been Updated",html:`<span>This is a confirmation of your Appointment Update</span>`})
         await appointmentService.updateAppointment(id, formData)
         toast.success("Appointment updated successfully")
       } else {
+        setFormData({...formData,to:currentPatient.email,subject:"Your Appointment has been Scheduled",html:`<span>This is a confirmation of your Appointment Schedule</span>`})
         await appointmentService.createAppointment(formData)
         toast.success("Appointment scheduled successfully")
       }

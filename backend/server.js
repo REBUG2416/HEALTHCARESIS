@@ -1231,7 +1231,6 @@ app.post("/api/appointments", async (req, res) => {
 app.put("/api/appointments/:id", async (req, res) => {
   const { id } = req.params;
   const { patient_id, user_id, appointment_date, appointment_type, notes, status,to,subject,html } = req.body;
-  console.log(req.boby);
 
   if (!patient_id || !user_id || !appointment_date || !appointment_type) {
     return res.status(400).json({ message: "Required fields are missing" });
@@ -1252,7 +1251,6 @@ app.put("/api/appointments/:id", async (req, res) => {
       status,
       updated_at: new Date(),
     });
-    console.log(to,subject,html);
     await sendEmail({to:to,subject:subject,html:html})
 
     res.json({
